@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-with open("testinput", "r") as file:
+with open("input", "r") as file:
     text = file.read()
     text = text.split("\n")
     text = text[:-1]
