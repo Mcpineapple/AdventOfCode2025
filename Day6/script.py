@@ -1,30 +1,33 @@
 #!/usr/bin/env python3
-
+import math
 
 with open("input") as file:
-    text = file.read()[:-1]
-text = text.split("\n")
-for i in range(len(text)):
-    text[i] = text[i].split()
-for i in text:
-    for j in range(len(i)):
-        if i[j].isnumeric():
-            i[j] = int(i[j])
+    text = file.readlines()
+
+
+ops = text[-1].split()
+
+tot = 0
+op_num = 0
+nums = []
+for col in range(len(text[0])):
+    num = ""
+
+    for line in range(len(text) - 1):
+        if text[line][col].isdigit():
+            num += text[line][col]
+
+    if col == len(text[0]) - 1:
+        if num.isnumeric():
+            nums.append(int(num))
+        num = ""
+    if num == "":
+        if ops[op_num] == "*":
+            tot += math.prod(nums)
         else:
-            i[j] = i[j].strip()
-
-
-total = 0
-for j in range(len(text[0])):
-    if text[len(text) - 1][j] == "*":
-        func = lambda x, y: x * y
-        current = 1
+            tot += sum(nums)
+        nums = []
+        op_num += 1
     else:
-        func = lambda x, y: x + y
-        current = 0
-    for i in range(len(text) - 2, -1, -1):
-        current = func(current, text[i][j])
-    total += current
-
-print("tot")
-print(total)
+        nums.append(int(num))
+print("result : ", tot)
